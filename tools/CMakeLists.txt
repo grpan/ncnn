@@ -13,9 +13,15 @@ if(MSVC)
     add_definitions(/wd4018 /wd4244 /wd4996)
 endif()
 
-add_subdirectory(caffe)
+
 add_subdirectory(mxnet)
-add_subdirectory(onnx)
+if(NCNN_PROTOBUF)
+    add_subdirectory(caffe)
+    add_subdirectory(onnx)
+else()
+    message(WARNING "NCNN_PROTOBUF disabled, caffe and onnx tools won't be built")
+endif()
+
 add_subdirectory(darknet)
 if(NCNN_INT8)
     add_subdirectory(quantize)
